@@ -23,19 +23,19 @@ public class ProductController {
     }
     @GetMapping("/")
     public List<Product> getAllProducts(){
-        return new ArrayList<>();
+        return productService.getAllProducts();
     }
     @PostMapping("/")
     public  Product createProduct(@RequestBody Product product){
-        return new Product();
+        return productService.createProduct(product);
     }
     @DeleteMapping("/id")
-    public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long productId) {
-        return null;
+    public boolean deleteProduct(@PathVariable Long id) {
+        return  productService.deleteProduct(id);
     }
-    @PatchMapping("/")
-    public Product updateProduct(@RequestBody Product product){
-        return new Product();
+    @PutMapping("/id")
+    public Product updateProduct(@PathVariable("id") Long productId, @RequestBody Product product){
+        return productService.updateProduct(productId,product);
     }
 }
 
