@@ -41,7 +41,7 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts() throws ProductNotFoundException {
         ResponseEntity<FakeStoreProductDto[]> fakeStoreProductDtoResponse =
                 restTemplate.getForEntity(
                         "https://fakestoreapi.com/products",

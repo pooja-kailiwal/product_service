@@ -27,29 +27,30 @@ public class ProductController {
     public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long productId) throws ProductNotFoundException {
         //Should we call FakeStore API here ? No, we should make a call to the Service.
 
-        //throw new RuntimeException("Something went wrong");
-        ResponseEntity<Product> responseEntity  =
-                new ResponseEntity<>(
-                        productService.getSingleProduct(productId),
-                        HttpStatus.OK
-                );
-
-//        Product product = null;
-//        try {
-//            product = productService.getSingleProduct(productId);
-//            responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
-//        } catch (RuntimeException e) {
-//            e.printStackTrace();
-//            responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
+        ResponseEntity<Product> responseEntity  =null;
+        try {
+            Product product = productService.getSingleProduct(productId);
+            responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
         return responseEntity;
     }
 
     // localhost:8080/products/
     @GetMapping("/")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts() throws ProductNotFoundException{
+        ResponseEntity<List<Product>> responseEntity  =null;
+        try{
+            List<Product> product = productService.getAllProducts();
+            responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return responseEntity;
     }
 
     // localhost:8080/products/
