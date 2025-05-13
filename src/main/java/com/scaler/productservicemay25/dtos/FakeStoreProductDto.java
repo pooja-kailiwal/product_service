@@ -1,5 +1,4 @@
 package com.scaler.productservicemay25.dtos;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,5 +11,4 @@ public class FakeStoreProductDto {
     private String description;
     private String image;
     private String category;
-
 }

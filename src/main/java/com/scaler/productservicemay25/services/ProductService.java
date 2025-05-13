@@ -1,13 +1,16 @@
 package com.scaler.productservicemay25.services;
 
+import com.scaler.productservicemay25.exceptions.ProductNotFoundException;
 import com.scaler.productservicemay25.models.Product;
 
 import java.util.List;
 
 public interface ProductService {
+    Product getSingleProduct(Long productId) throws ProductNotFoundException;
+
     List<Product> getAllProducts();
-    Product getSingleProduct(Long id);
+
     Product createProduct(Product product);
-    Product updateProduct(Long id,Product product);
-    boolean deleteProduct(Long id);
+
+    boolean deleteProduct(Long productId);
 }
