@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Note: This service class will implement all the API's using FakeStore.
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService {
     private RestTemplate restTemplate;
 
@@ -23,32 +23,33 @@ public class FakeStoreProductService implements ProductService {
     @Override
     public Product getSingleProduct(Long productId) throws ProductNotFoundException {
 
-      //  throw new RuntimeException("Something went wrong");
+        throw new RuntimeException("Something went wrong");
 
-        ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity = restTemplate.getForEntity(
-                "https://fakestoreapi.com/products/" + productId,
-                FakeStoreProductDto.class);
-
-        FakeStoreProductDto fakeStoreProductDto = fakeStoreProductDtoResponseEntity.getBody();
-
-        if (fakeStoreProductDto == null) {
-            //Wrong product Id.
-            throw new ProductNotFoundException("Product with id " + productId + " doesn't exist.");
-        }
-
-        //Convert FakeStoreProductDto into Product Object.
-        return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
+//        ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity = restTemplate.getForEntity(
+//                "https://fakestoreapi.com/products/" + productId,
+//                FakeStoreProductDto.class);
+//
+//        FakeStoreProductDto fakeStoreProductDto = fakeStoreProductDtoResponseEntity.getBody();
+//
+//        if (fakeStoreProductDto == null) {
+//            //Wrong product Id.
+//            throw new ProductNotFoundException("Product with id " + productId + " doesn't exist.");
+//        }
+//
+//        //Convert FakeStoreProductDto into Product Object.
+//        return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
     }
 
     @Override
-    public List<Product> getAllProducts() throws ProductNotFoundException {
+    public List<Product> getAllProducts() {
         ResponseEntity<FakeStoreProductDto[]> fakeStoreProductDtoResponse =
                 restTemplate.getForEntity(
                         "https://fakestoreapi.com/products",
                         FakeStoreProductDto[].class
                 );
 
-        FakeStoreProductDto[] fakeStoreProductDtos =fakeStoreProductDtoResponse.getBody();
+        FakeStoreProductDto[] fakeStoreProductDtos =
+                fakeStoreProductDtoResponse.getBody();
         List<Product> products = new ArrayList<>();
 
         for (FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos) {
