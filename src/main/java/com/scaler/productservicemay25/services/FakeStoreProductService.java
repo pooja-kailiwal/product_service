@@ -23,21 +23,19 @@ public class FakeStoreProductService implements ProductService {
     @Override
     public Product getSingleProduct(Long productId) throws ProductNotFoundException {
 
-        throw new RuntimeException("Something went wrong");
+        ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity = restTemplate.getForEntity(
+                "https://fakestoreapi.com/products/" + productId,
+                FakeStoreProductDto.class);
 
-//        ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity = restTemplate.getForEntity(
-//                "https://fakestoreapi.com/products/" + productId,
-//                FakeStoreProductDto.class);
-//
-//        FakeStoreProductDto fakeStoreProductDto = fakeStoreProductDtoResponseEntity.getBody();
-//
-//        if (fakeStoreProductDto == null) {
-//            //Wrong product Id.
-//            throw new ProductNotFoundException("Product with id " + productId + " doesn't exist.");
-//        }
-//
-//        //Convert FakeStoreProductDto into Product Object.
-//        return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
+        FakeStoreProductDto fakeStoreProductDto = fakeStoreProductDtoResponseEntity.getBody();
+
+        if (fakeStoreProductDto == null) {
+            //Wrong product Id.
+            throw new ProductNotFoundException(productId, "Product with id " + productId + " doesn't exist.");
+        }
+
+        //Convert FakeStoreProductDto into Product Object.
+        return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
     }
 
     @Override
@@ -65,9 +63,7 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public boolean deleteProduct(Long productId) {
-        return false;
-    }
+    public void deleteProduct(Long productId) {}
 
     private static Product convertFakeStoreProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto) {
         if (fakeStoreProductDto == null) {

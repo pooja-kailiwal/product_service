@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+//@Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     //select * from Product where id = ?
     @Override
@@ -31,6 +31,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 //    @Query("select title from products where id = ?")
 //    Optional<Product> findProductTitleById(Long productId);
+    Product save(Product product);
+    //update + insert => upsert
+
+
+    @Override
+    void deleteById(Long productId);
 }
 
 
